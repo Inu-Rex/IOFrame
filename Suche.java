@@ -91,18 +91,13 @@ public class Suche extends IOFrame
                 TextField OutputField = (TextField) this.ControlList.get(4);
                 OutputField.setText(Integer.toString(output));
               }else{
-                if (button.getLabel().equalsIgnoreCase("Ende")) 
+                if (button.getLabel().equalsIgnoreCase("Neue Einträge erzeugen")) 
                 {
-                  System.exit(0);
+                  initList(20);
                 }else{
-                  if (button.getLabel().equalsIgnoreCase("Neue Einträge erzeugen")) 
+                  if (button.getLabel().equalsIgnoreCase("Neue Werte erzeugen")) 
                   {
-                    initList(20);
-                  }else{
-                    if (button.getLabel().equalsIgnoreCase("Neue Werte erzeugen")) 
-                    {
-                      initMax(100,200,20);
-                    }
+                    initMax(100,200,20);
                   }
                 }
               }

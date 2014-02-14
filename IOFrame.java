@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
+import java.io.*;
+import java.net.*;
 
 /**
   *
@@ -220,6 +222,19 @@ public class IOFrame extends Frame {
     clientPanel = new Panel(null);
     add(clientPanel);
     setResizable(false);
+    setIcon("IOFrame.png");
+  }
+  
+  public boolean setIcon(String path){
+    try{
+      URL iconURL = getClass().getResource(path);
+      // iconURL is null when not found
+      ImageIcon icon = new ImageIcon(iconURL);
+      this.setIconImage(icon.getImage());
+      return true;
+    }catch(Exception e){
+      return false;
+    }
   }
   
   public boolean requiresVersion(int min_maj, int min_min, int min_rev, int max_maj, int max_min, int max_rev, boolean customHandling){

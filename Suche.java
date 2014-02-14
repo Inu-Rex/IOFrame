@@ -139,16 +139,4 @@ public class Suche extends IOFrame
     JLabel lbl = new JLabel("<html>&copy; 2014, Daniel Schweighöfer</html>");
     this.addCustomControl(lbl,20);
   }
-  
-  public void removeAllControls(){
-    try{
-      int cnt = ControlList.size();
-      for (int i=0;i<cnt;i++) 
-      {
-        this.removeByID(cnt -1 - i);
-      }
-    }catch(Exception e){
-      
-    }
-  }
 }

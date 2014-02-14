@@ -4,6 +4,7 @@ public class Heron extends IOFrame
 {
   public Heron(String title, ArrayList<String> Inputs, ArrayList<String> Outputs, int lblWidth, int txtFieldWidth){
     super(title, Inputs, Outputs,lblWidth, txtFieldWidth);
+    this.requiresVersion(1,2,3,-1,-1,-1,false);
   }
   
   public static void main(String[] args) 

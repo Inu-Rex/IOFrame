@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import javax.swing.*;
 
 /**
   *
@@ -23,12 +24,19 @@ import java.util.*;
   *          Adding Controls at runtime is now possible
   * v1.2.1:  Removal of Controls at runtime is now possible
   *          Removed code of subclasses
+  * v1.2.2:  Fixed a bug when removing Elements with additional helper Objects
+  * v1.2.3:  Added the removeAllControls() function written initially for just one Project
+  *          Added a simple VersionControl System
   *
-  * @version 1.2.1 from 24.01.2014
+  * @version 1.2.3 from 24.01.2014
   * @author D. Schweighoefer
   */
 
 public class IOFrame extends Frame {
+  //Versioning
+  public static final int var_maj = 1;
+  public static final int var_min = 2;
+  public static final int var_rev = 3;  
   // Anfang Attribute
   public ArrayList<TextField> Output = new ArrayList<TextField>();                //Ausgabefelder
   public ArrayList<TextField> Input = new ArrayList<TextField>();                 //Eingabeflder
@@ -42,6 +50,7 @@ public class IOFrame extends Frame {
   private ArrayList<Integer> ControlListHelperLink = new ArrayList<Integer>();
   private int currentY = border;
   private Panel clientPanel; //Clientbereich
+  private boolean isCompatibilityMode = false;
   // Ende Attribute
   
   //Löschen von Steuerelementen
@@ -53,9 +62,9 @@ public class IOFrame extends Frame {
     ControlList.remove(cmp);
     if (ControlListHelperLink.get(id) > -1) 
     {
-      for (int i = id;i < ControlListHelperLink.size();i++ ) 
+      for (int i = id + 1;i < ControlListHelperLink.size();i++ ) 
       {
-        if (ControlListHelperLink.get(i) > -1) 
+        if (ControlListHelperLink.get(i) > 0) 
         {
           ControlListHelperLink.set(i,ControlListHelperLink.get(i) - 1);
         }
@@ -66,6 +75,18 @@ public class IOFrame extends Frame {
     }
     ControlListHelperLink.remove(id);
     updateControls();
+  }
+  
+  public void removeAllControls(){
+    try{
+      int cnt = ControlList.size();
+      for (int i=0;i<cnt;i++) 
+      {
+        this.removeByID(cnt -1 - i);
+      }
+    }catch(Exception e){
+      
+    }
   }
   
   //Schaltfläche hinzufügen
@@ -87,8 +108,7 @@ public class IOFrame extends Frame {
     ControlList.add(btn);
     ControlListHelperLink.add(-1);
     clientPanel.add(btn);
-    updateSize(); 
-    //return ControlList.size() - 1;
+    updateSize();     
   }
   
   //TextBox erstellen (Ausgabefeld)
@@ -100,6 +120,12 @@ public class IOFrame extends Frame {
   //TextBox erstellen (Standard)
   public void addTextBox(String Title){
     addTextBox(Title,"",false);
+    updateSize();
+  }
+  
+  //TextBox erstellen (default Wert)
+  public void addTextBox(String Title, String defaultValue){
+    addTextBox(Title,defaultValue,false);
     updateSize();
   }
   
@@ -196,6 +222,34 @@ public class IOFrame extends Frame {
     setResizable(false);
   }
   
+  public boolean requiresVersion(int min_maj, int min_min, int min_rev, int max_maj, int max_min, int max_rev, boolean customHandling){
+    boolean isValid;
+    if (max_maj == -1) 
+    {
+      max_maj = var_maj;
+      max_min = var_min;
+      max_rev = var_rev;
+    }
+    if ((this.var_maj >= min_maj) && (this.var_min >=min_min) && (this.var_rev >= min_rev) && (this.var_maj <= max_maj) && (this.var_min <= max_min) && (this.var_rev <= max_rev)) 
+    {
+      isValid = true;
+    }else{
+      isValid = false;
+    }
+    if (!isValid) 
+    {
+      if (!customHandling) 
+      {
+        this.removeAllControls();
+        JLabel lbl = new JLabel("<html>Dieses Programm scheint nicht mit dieses Version von IO Frame kompatibel zu sein:<br>Benötigte Version:<br>" + min_maj + "." + min_min + "." + min_rev + " - " + max_maj + "." + max_min + "." + max_rev + "<br>Aktuelle Version:<br>" + var_maj + "." + var_min + "." + var_rev + "</html>");
+        this.addCustomControl(lbl,120);
+        this.addButton("Ende");
+      }
+    }
+    
+    return isValid;
+  }
+  
   public void centerOnScreen(){
     Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
     int x = (d.width - getSize().width) / 2;
@@ -228,6 +282,9 @@ public class IOFrame extends Frame {
   {
     //Titel übergeben
     super(title);
+    //Auf Kompatibilitätsmodus setzen
+    this.isCompatibilityMode = true;
+    System.out.println("Kompatibilitätsmodus aktiviert: Dieses Programm kann möglicherweise nicht mit neueren Versionen dieser Klasse funktionieren");
     //Konstruktion auslösen
     initialisation(lblWidth,txtFieldWidth);
     //Für jedes Eingabefeld ein Textfeld erzeugen
@@ -254,7 +311,7 @@ public class IOFrame extends Frame {
     //Schaltflächentitel herausfiltern
     Button btn = (Button) evt.getSource();
     //Wenn "Rechnen!" alte 'rechnen' Operation vorbereiten und ausführen
-    if (btn.getLabel().equals("Rechnen!")){
+    if (btn.getLabel().equals("Rechnen!") && this.isCompatibilityMode){ 
       //Ausgabefelder leeren
       for (int i=0;i<Output.size();i++) 
       {
@@ -293,6 +350,7 @@ public class IOFrame extends Frame {
     }catch(Exception e){
       //Bei fehlenden oder falschen Feldern
       System.out.println("Please override 'public void buttonClick(String button)'");
+      System.out.println("And don't name your Button 'Rechnen!'");
     }
   }
   

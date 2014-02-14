@@ -8,10 +8,10 @@ public class BMI extends IOFrame
   public BMI(String title, int lblWidth, int txtFieldWidth){
     super (title, lblWidth, txtFieldWidth);
     this.addTextBox("Gewicht (in kg)");
-    this.addTextBox("Größe (in m)");
+    this.addTextBox("Größe (in m)");    
     this.addButton("BMI errechnen");
     this.addOutputBox("BMI");
-    this.addOutputBox("Ergebnis");
+    this.addOutputBox("Ergebnis");    
     startDisplay();
   }
   
@@ -32,6 +32,6 @@ public class BMI extends IOFrame
       ((TextField) this.ControlList.get(4)).setText("Übergewicht!");
     }else{
       ((TextField) this.ControlList.get(4)).setText("Adipositas!");
-    }
+    }    
   }
 }

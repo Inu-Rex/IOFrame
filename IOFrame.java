@@ -29,8 +29,9 @@ import java.net.*;
   * v1.2.2:  Fixed a bug when removing Elements with additional helper Objects
   * v1.2.3:  Added the removeAllControls() function written initially for just one Project
   *          Added a simple VersionControl System
+  * v1.2.4:  Added an easy way to customize the Icon and added a default one.
   *
-  * @version 1.2.3 from 24.01.2014
+  * @version 1.2.4 from 24.01.2014
   * @author D. Schweighoefer
   */
 
@@ -38,7 +39,7 @@ public class IOFrame extends Frame {
   //Versioning
   public static final int var_maj = 1;
   public static final int var_min = 2;
-  public static final int var_rev = 3;  
+  public static final int var_rev = 4;  
   // Anfang Attribute
   public ArrayList<TextField> Output = new ArrayList<TextField>();                //Ausgabefelder
   public ArrayList<TextField> Input = new ArrayList<TextField>();                 //Eingabeflder

@@ -23,8 +23,9 @@ import java.util.*;
   *          Adding Controls at runtime is now possible
   * v1.2.1:  Removal of Controls at runtime is now possible
   *          Removed code of subclasses
+  * v1.2.2:  Fixed a bug when removing Elements with additional helper Objects
   *
-  * @version 1.2.1 from 24.01.2014
+  * @version 1.2.2 from 24.01.2014
   * @author D. Schweighoefer
   */
 

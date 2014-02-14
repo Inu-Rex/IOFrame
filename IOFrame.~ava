@@ -53,9 +53,9 @@ public class IOFrame extends Frame {
     ControlList.remove(cmp);
     if (ControlListHelperLink.get(id) > -1) 
     {
-      for (int i = id + 1;i < ControlListHelperLink.size();i++ ) 
+      for (int i = id;i < ControlListHelperLink.size();i++ ) 
       {
-        if (ControlListHelperLink.get(i) > 0) 
+        if (ControlListHelperLink.get(i) > -1) 
         {
           ControlListHelperLink.set(i,ControlListHelperLink.get(i) - 1);
         }

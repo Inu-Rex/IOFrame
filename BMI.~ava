@@ -1,0 +1,23 @@
+import java.util.*;
+import java.awt.*;
+
+//Programmklassen erben von IOFrame
+public class BMI extends IOFrame
+{
+  //Konstruktor = Konstruktor von IOFrame
+  public BMI(String title, int lblWidth, int txtFieldWidth){
+    super (title, lblWidth, txtFieldWidth);
+    this.addButton("Information");
+    this.addOutputBox("Programm starten");
+    startDisplay();
+  }
+  
+  public static void main(String[] args) 
+  {
+    new BMI("Body-Mass-Index",100, 130);
+  }
+  
+  public void buttonClick(Button button){
+    
+  }
+}

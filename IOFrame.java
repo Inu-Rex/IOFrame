@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.io.*;
 import java.net.*;
 
+
+
 /**
   *
   * description
@@ -34,8 +36,10 @@ import java.net.*;
   * @version 1.2.4 from 24.01.2014
   * @author D. Schweighoefer
   */
-
+  
 public class IOFrame extends Frame {
+  
+  
   //Versioning
   public static final int var_maj = 1;
   public static final int var_min = 2;
